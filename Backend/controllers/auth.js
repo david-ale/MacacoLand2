@@ -1,6 +1,7 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
+const {generarJWT} = require('../helpers/jwt')
 
 const signUp = async (req,res = express.request) => {
     const {nombre, email, contraseña, genero, fechaNacimiento} = req.body
@@ -50,11 +51,15 @@ const login = async (req,res = express.request) => {
                 msg: 'La contraseña no es valida'
             })
         }
+
+        const token = await(generarJWT(usuario.id,usuario.nombre))
+
         return res.status(200).json({
             ok: true,
-            usuario
+            usuario,
+            token
         })
-        
+
     }catch(error){
         console.log(error)
         return res.status(500).json({
@@ -76,9 +81,13 @@ const index = (req,res = express.request) =>{
     })
 }
 
-const revalidarToken = (req,res = express.request) => {
+const revalidarToken = async (req,res = express.request) => {
+    const {uid,name} = req
+    const token = await(generarJWT(uid,name))
+
     res.json({
-        ok: true
+        ok: true,
+        token
     })
 }
 
