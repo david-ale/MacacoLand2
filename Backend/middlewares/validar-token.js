@@ -6,7 +6,7 @@ const validarJWT = (req,res = response, next) => {
     if(!token){
         return res.status(401).json({
             ok: false,
-            msg: 'No existe el token'
+            msg: 'No existe el token, porfavor inicie sesion'
         })
     }
     try{
@@ -21,7 +21,7 @@ const validarJWT = (req,res = response, next) => {
     }catch(error){
         return res.status(400).json({
             ok: false,
-            msg: 'Token invalido'
+            msg: 'Token invalido, inicie sesion nuevamente'
         })
     }
 

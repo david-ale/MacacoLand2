@@ -2,9 +2,10 @@ const express = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const {generarJWT} = require('../helpers/jwt')
+const {validarJWT} = require('../middlewares/validar-token')
 
 const signUp = async (req,res = express.request) => {
-    const {nombre, email, contraseña, genero, fechaNacimiento} = req.body
+    const {nombre, email, contraseña} = req.body
     try{
         let usuario = await Usuario.findOne({email:email})
         if(usuario){
@@ -24,7 +25,7 @@ const signUp = async (req,res = express.request) => {
             usuario
         })
     }catch(error){
-        console.log(erorr)
+        console.log(error)
         return res.status(500).json({
             ok:false,
             error
@@ -69,15 +70,22 @@ const login = async (req,res = express.request) => {
     }
 }
 
-const profile = (req,res = express.request) => {
+const profile = async (req,res = express.request) => {
+    //Acceso a lo que seria el perfil del usuario en fronend
+    const {nombre,email,contraseña} = req.body;
     res.json ({
-        ok: true
+        ok: true,
+        msg:`Esto es la pagina de perfil de ${nombre} `
     })
 }
 
-const index = (req,res = express.request) =>{
+const index = async (req,res = express.request) =>{
+    
+    //Acceso a lo que seria el menu principal del usuario en frontend
+    const {nombre,email,contraseña} = req.body;
     res.json({
-        ok: true
+        ok: true,
+        msg:`Esto es la pagina de perfil de ${nombre} `
     })
 }
 

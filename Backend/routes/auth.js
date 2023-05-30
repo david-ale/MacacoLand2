@@ -22,6 +22,7 @@ router.post('/login',
     ],
     login)
 
+
 router.get('/index',index)
 router.get('/Profile',profile)
 router.get('/renew',revalidarToken,validarJWT)
