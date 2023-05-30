@@ -45,7 +45,6 @@ class Server {
 
     setRoutes(){
         this.app.use(this.paths.auth , require('../routes/auth'))
-        //this.app.use(this.paths.task, require('../routes/tasks'))
 
     }
 
